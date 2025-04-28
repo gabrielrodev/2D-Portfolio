@@ -3,5 +3,5 @@ import kaboom from "kaboom";
 export const K = kaboom({
     global: false,
     touchToMouse: true,
-    canvas: document.querySelector("#game"),
+    canvas: document.getElementById("game"),
 })
