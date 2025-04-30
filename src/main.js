@@ -1,6 +1,6 @@
-import { dialogueData, scaleFactor } from "./constants"; //importing the scale factor from constants.js file
+import { scaleFactor } from "./constants"; //importing the scale factor from constants.js file
 import { k } from "./kaboomCtx";
-import { displayDialogue, setCamScale} from "./utils";
+import { displayDialogue} from "./utils";
 
 k.loadSprite("spritesheet", "./spritesheet.png", {
     sliceX: 39,
@@ -73,15 +73,13 @@ k.scene("main", async () => { //we using fetch call async added
                         (map.pos.y + entity.y) * scaleFactor
                     ); // this is the position of the player
                     k.add(player); 
-                    continue;
                 }
             }
         }
-
     }
     
     k.onUpdate(() => {
-        k.camPos(player.x,player.pos.y + 100)
+        k.camPos(player.pos.x,player.pos.y + 100)
 
     });
 
