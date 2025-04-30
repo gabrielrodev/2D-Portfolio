@@ -1,11 +1,12 @@
-import { scaleFactor } from "./constants.js"; //importing the scale factor from constants.js file
-import { K } from "./kaboomCtx";
+import { dialogueData, scaleFactor } from "./constants"; //importing the scale factor from constants.js file
+import { k } from "./kaboomCtx";
+import { displayDialogue, setCamScale} from "./utils";
 
-K.loadSprite("spritesheet", "./spritesheet.png", {
+k.loadSprite("spritesheet", "./spritesheet.png", {
     sliceX: 39,
     sliceY: 31, //every frame is 16 by 16. divide by 16 to get the number of frames in the spritesheet
     anims: {// i think it specifies how is going to move and in which direction what art is going to be shown
-        "idle": 936,
+        "idle-down": 936,
         "walk-down": { from: 936, to: 939, loop: true, speed: 8 },
         "idle-side": 975,
         "walk-side": { from: 975, to: 978, loop: true, speed: 8 },
@@ -14,25 +15,25 @@ K.loadSprite("spritesheet", "./spritesheet.png", {
     },
 });
 
-K.loadSprite("map", "/map.png",);
+k.loadSprite("map", "/map.png");
 
-K.setBackground(K.Color.fromHex("#311047")); // here is basically the color of the background
+k.setBackground(k.Color.fromHex("#311047")); // here is basically the color of the background
 //here we can specify different scenes
-K.scene("main", async () => { //we using fetch call async added
+k.scene("main", async () => { //we using fetch call async added
     const mapData = await (await fetch("/map.json")).json(); //fetch the map data from the json file
     const layers = mapData.layers;
     //game object, different components 
-    const map = K.make([K.sprite("map"), K.pos(), K.scale(scaleFactor)]);
+    const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
 
-    const player = K.make([
-        K.sprite("spritesheet", { anim: "idle-down" }),
-        K.area({
-            shape: new K.Rect(K.vec2(0, 3), 10, 10),
+    const player = k.make([
+        k.sprite("spritesheet", { anim: "idle-down" }),
+        k.area({
+            shape: new k.Rect(k.vec2(0, 3), 10, 10),
         }),
-        K.body(),
-        K.anchor("center"),
-        K.pos(),
-        K.scale(scaleFactor),
+        k.body(),
+        k.anchor("center"),
+        k.pos(),
+        k.scale(scaleFactor),
         {
             speed: 250,
             direction: "down",
@@ -45,22 +46,50 @@ K.scene("main", async () => { //we using fetch call async added
         if (layer.name === "boundaries") {
             for (const boundary of layer.objects) {
                 map.add([
-                    K.area({
-                        shape: new K.Rect(K.vec2(0), boundary.width, boundary.height),
+                    k.area({
+                        shape: new k.Rect(k.vec2(0), boundary.width, boundary.height),
                     }),
-                    K.body({ isStatic: true }), // makes sure that the player can't overlap, it makes walls.
-                    K.pos(boundary.x, boundary.y),
+                    k.body({ isStatic: true }), // makes sure that the player can't overlap, it makes walls.
+                    k.pos(boundary.x, boundary.y),
                     boundary.name, // we can identify the tag of the game object
                 ]);
                 if (boundary.name) {
                     player.onCollide(boundary.name, () => {
                         player.isInDialogue = true; // when the player collides with the boundary, it sets the isInDialogue to true
-                        //TODO
+                        displayDialogue("TODO", ()=> (player.isInDialogue = false)); // this function is called when the player collides with the boundary
                     });
 
                 }
 
             }
+            continue;
         }
+        
+        if (layer.name === "spawnpoints"){
+            for (const entity of layer.objects) {
+                if (entity.name === "player") {
+                    player.pos = k.vec2( 
+                        (map.pos.x + entity.x) * scaleFactor, 
+                        (map.pos.y + entity.y) * scaleFactor
+                    ); // this is the position of the player
+                    k.add(player); 
+                    continue;
+                }
+            }
+        }
+
+    }
+    
+    k.onUpdate(() => {
+        k.camPos(player.x,player.pos.y + 100)
+
     });
-K.go("main"); 
+
+    k.onMouseDown((mouseBtn) => {
+        if (mouseBtn !== "left" || player.isInDialogue) return; // if the mouse button is not left or the player is in dialogue, it returns
+
+        const worldMousePos = k.toWorld(k.mousePos()); 
+        player.moveTo(worldMousePos, player.speed); // this is the speed of the player
+    });
+});
+k.go("main");
