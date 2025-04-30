@@ -1,6 +1,6 @@
 import { scaleFactor } from "./constants"; //importing the scale factor from constants.js file
 import { k } from "./kaboomCtx";
-import { displayDialogue} from "./utils";
+import { displayDialogue, setCamScale} from "./utils";
 
 k.loadSprite("spritesheet", "./spritesheet.png", {
     sliceX: 39,
@@ -77,7 +77,11 @@ k.scene("main", async () => { //we using fetch call async added
             }
         }
     }
-    
+    setCamScale(k); // this function is called to set the camera scale
+    k.onResize(() => {
+        setCanscake(k)
+    });
+
     k.onUpdate(() => {
         k.camPos(player.pos.x,player.pos.y + 100)
 
@@ -88,6 +92,21 @@ k.scene("main", async () => { //we using fetch call async added
 
         const worldMousePos = k.toWorld(k.mousePos()); 
         player.moveTo(worldMousePos, player.speed); // this is the speed of the player
+    
+        const mouseAngle = player.pos.angle(worldMousePos);
+
+        const lowerBound = 50;
+        const upperBound = 125;
+
+        if(
+            mouseAngle > lowerBound &&
+            mouseAngle < upperBound &&
+            player.curAnim() !== "walk-up"
+        ) {
+            player.play("walk-up"); // this is the animation of the player
+            player.direction = "up"; // this is the direction of the player
+            return;
+        }
     });
 });
 k.go("main");

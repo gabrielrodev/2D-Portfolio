@@ -14,7 +14,7 @@ export function displayDialogue(text, onDisplayEnd) {
       }
   
       clearInterval(intervalRef);
-    }, 1);
+    }, 5);
   
     const closeBtn = document.getElementById("close");
   
@@ -39,7 +39,8 @@ export function displayDialogue(text, onDisplayEnd) {
     const resizeFactor = k.width() / k.height();
     if (resizeFactor < 1) {
       k.camScale(k.vec2(1));
-    } else {
+      return;
+    } 
       k.camScale(k.vec2(1.5));
     }
-  }
+  
