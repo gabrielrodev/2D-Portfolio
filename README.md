@@ -1,23 +1,23 @@
-2D Portfolio
-Welcome to my interactive 2D Portfolio — a game-inspired project built with Kaboom.js to showcase my resume, projects, and learning journey!
+# 2D Portfolio
 
-🌟 What’s Inside
-This project displays:
+Welcome to my interactive **2D Portfolio** — a game-inspired project built with **Kaboom.js** to showcase my resume, projects, and learning journey!
 
-My resume
+---
 
-Highlights of my skills in C, Python, JavaScript, and HTML
+## 🌟 What’s Inside
 
-A fun, interactive 2D world where you can walk around and explore my projects and interests
+- 📝 My resume  
+- 💻 Highlights of my skills in **C**, **Python**, **JavaScript**, and **HTML**  
+- 🎮 A fun, interactive 2D world where you can walk around and explore my projects and interests  
 
-🚀 How to Run It Locally
-To explore the 2D Portfolio on your machine, follow these steps:
+---
 
-1️⃣ Clone the repository
+## 🚀 How to Run It Locally
 
-bash
-Copy
-Edit
+Follow these steps to explore the 2D Portfolio on your machine:
+
+1️⃣ **Clone the repository**  
+```bash
 git clone https://github.com/gabrielrodev/2D-Portfolio.git
 cd 2D-Portfolio
 2️⃣ Install the dependencies
@@ -42,10 +42,12 @@ Edit
 http://localhost:5173
 📦 Requirements
 ✅ Node.js
+
 ✅ npm
 
 💬 About Me
-This portfolio represents not just my skills but my passion for learning, building, and improving. Explore it freely — and if you’re curious to know more, feel free to reach out!
+This portfolio represents not just my skills but my passion for learning, building, and improving.
+Explore it freely — and if you’re curious to know more, feel free to reach out!
 
 📧 Contact: gerodriguezrached@gmail.com
 🔗 GitHub: gabrielrodev
