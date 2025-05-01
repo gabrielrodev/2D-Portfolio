@@ -56,7 +56,7 @@ k.scene("main", async () => { //we using fetch call async added
                 if (boundary.name) {
                     player.onCollide(boundary.name, () => {
                         player.isInDialogue = true; // when the player collides with the boundary, it sets the isInDialogue to true
-                        displayDialogue("TODO", ()=> (player.isInDialogue = false)); // this function is called when the player collides with the boundary
+                        displayDialogue(dialogueData[boundary.name], ()=> (player.isInDialogue = false)); // this function is called when the player collides with the boundary
                     });
 
                 }
@@ -79,7 +79,7 @@ k.scene("main", async () => { //we using fetch call async added
     }
     setCamScale(k); // this function is called to set the camera scale
     k.onResize(() => {
-        setCanscake(k)
+        setCamScale(k)
     });
 
     k.onUpdate(() => {
@@ -106,7 +106,40 @@ k.scene("main", async () => { //we using fetch call async added
             player.play("walk-up"); // this is the animation of the player
             player.direction = "up"; // this is the direction of the player
             return;
+        } 
+        if(
+            mouseAngle < -lowerBound &&
+            mouseAngle > -upperBound &&
+            player.curAnim() !== "walk-down"
+        ) {
+            player.play("walk-down"); // this is the animation of the player
+            player.direction = "down"; // this is the direction of the player
+            return;
         }
+        if ( Math. abs(mouseAngle) > upperBound) {
+            player.flipX = false;
+            if (player.curAnim() !== "walk-side") player.play("walk-side");
+            player.direction= "right";
+            return;
+        }
+        if ( Math. abs(mouseAngle) < lowerBound) {
+            player.flipX = true;
+            if (player.curAnim() !== "walk-side") player.play("walk-side");
+            player.direction= "left";
+            return;
+        }
+    });
+
+    k.onMouseRelease(() => {
+        if (player.direction === "down") {
+            player.play("idle-down");
+            return;
+        }
+        if (player. direction === "up") {
+            player.play("idle-up");
+            return;
+        }
+        player.play("idle-side");
     });
 });
 k.go("main");
