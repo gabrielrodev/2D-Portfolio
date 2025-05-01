@@ -16,38 +16,26 @@ Welcome to my interactive **2D Portfolio** — a game-inspired project built wit
 
 Follow these steps to explore the 2D Portfolio on your machine:
 
-1️⃣ **Clone the repository**  
-```bash
-git clone https://github.com/gabrielrodev/2D-Portfolio.git
-cd 2D-Portfolio
-2️⃣ Install the dependencies
-Make sure you have Node.js installed. Then run:
-
-bash
-Copy
-Edit
+2️⃣ **Install the dependencies**  
+Make sure you have Node.js installed, then run:
 npm install
-3️⃣ Start the development server
 
-bash
-Copy
-Edit
+3️⃣ **Start the development server**  
 npm run dev
-4️⃣ Open it in your browser
-By default, it should be available at:
 
-arduino
-Copy
-Edit
+4️⃣ **Open it in your browser**  
 http://localhost:5173
-📦 Requirements
+
+---
+
+## 📦 Requirements
+
 ✅ Node.js
 
 ✅ npm
 
-💬 About Me
+## 💬 About Me
 This portfolio represents not just my skills but my passion for learning, building, and improving.
 Explore it freely — and if you’re curious to know more, feel free to reach out!
-
 📧 Contact: gerodriguezrached@gmail.com
 🔗 GitHub: gabrielrodev
